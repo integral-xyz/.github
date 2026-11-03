@@ -23,7 +23,7 @@ Twelve weeks of engineering momentum. **$range.**
 | :--- | :--- | :--- |
 $stats
 
-<sub>fms + fms-frontend + integrations · Complete weeks, Toronto time · Includes all PR authors · Snapshot captured $as_of</sub>
+<sub>Organization-wide · Complete weeks, Toronto time · Includes all PR authors · Snapshot captured $as_of</sub>
 
 ---
 
