@@ -62,7 +62,7 @@ def main(root=ROOT):
         bg, fg, muted = ('#0d1117', '#e6edf3', '#9da7b3') if dark else ('#ffffff', '#1f2328', '#59636e')
         green, bar, border = ('#63d9a4', '#204f3b', '#30363d') if dark else ('#156a46', '#c9e3d6', '#d1d9e0')
         for compact in [False, True]:
-            width, height = (360, 285) if compact else (960, 340)
+            width, height = (360, 230) if compact else (960, 260)
             left, right, top, bottom = (34, 12, 37, 86) if compact else (45, 16, 40, 84)
             step = (width-left-right)/len(ROWS)
             plot_height = height-top-bottom
