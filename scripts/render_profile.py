@@ -97,4 +97,3 @@ fields = {
 template = (ROOT / 'profile/README.template.md').read_text()
 (ROOT / 'profile/README.md').write_text(Template(template).substitute(fields))
 print('Rendered README and four chart images from JSON.')
-
