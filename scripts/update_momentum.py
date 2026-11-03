@@ -13,7 +13,7 @@ ZONE = ZoneInfo('America/Toronto')
 def run_gh(arguments, operation):
     """Report actionable failures without copying private CLI output into reports."""
     try:
-        result = subprocess.run(['gh', 'api', 'graphql', *arguments], check=True, capture_output=True, text=True)
+        result = subprocess.run(['gh', 'api', *arguments], check=True, capture_output=True, text=True)
     except subprocess.CalledProcessError as error:
         diagnostic = (error.stderr or '').lower()
         if 'rate limit' in diagnostic:
@@ -36,7 +36,7 @@ def week_ranges(today):
 
 def collect(today):
     inventory_query = 'query($endCursor:String) { organization(login:' + json.dumps(ORGANIZATION) + ') { repositories(first:100, after:$endCursor) { totalCount nodes { viewerPermission } pageInfo { hasNextPage endCursor } } } }'
-    pages = run_gh(['--paginate', '--slurp', '-f', 'query=' + inventory_query], 'Repository inventory')
+    pages = run_gh(['graphql', '--paginate', '--slurp', '-f', 'query=' + inventory_query], 'Repository inventory')
     if not pages or any(page.get('errors') for page in pages):
         raise RuntimeError('GitHub could not return complete repository inventory; leaving existing snapshot untouched')
     connections = [page['data']['organization']['repositories'] for page in pages]
@@ -46,6 +46,15 @@ def collect(today):
         raise RuntimeError('Missing source repository access; leaving existing snapshot untouched')
     if len(repositories) != repository_count or connections[-1]['pageInfo']['hasNextPage']:
         raise RuntimeError('Incomplete repository inventory; leaving existing snapshot untouched')
+    organization = run_gh([f'orgs/{ORGANIZATION}'], 'Organization repository total')
+    # Owner-visible organization counters are independent of the token-filtered
+    # repository connection. owned_private_repos also includes internal repos;
+    # total_private_repos does not, so it cannot be used as the authority here.
+    totals = [organization.get(field) for field in ('public_repos', 'owned_private_repos')]
+    if any(type(total) is not int or total < 0 for total in totals):
+        raise RuntimeError('Cannot verify organization repository total; owner-authorized organization metadata is required; leaving existing snapshot untouched')
+    if repository_count != sum(totals):
+        raise RuntimeError('Repository inventory does not match the organization-wide total; check access to all organization repositories and retry; leaving existing snapshot untouched')
     queries = []
     ranges = week_ranges(today)
     for i, (start, stop) in enumerate(ranges):
@@ -53,7 +62,7 @@ def collect(today):
         b = (dt.datetime.combine(stop, dt.time(), ZONE) - dt.timedelta(seconds=1)).isoformat()
         query = f'is:pr is:merged org:{ORGANIZATION} merged:{a}..{b}'
         queries.append(f'w{i}: search(type:ISSUE, query:{json.dumps(query)}, first:1) {{ issueCount }}')
-    response = run_gh(['-f', 'query=query {' + ' '.join(queries) + '}'], 'Momentum query')
+    response = run_gh(['graphql', '-f', 'query=query {' + ' '.join(queries) + '}'], 'Momentum query')
     if response.get('errors'):
         raise RuntimeError('GitHub could not return complete counts; leaving existing snapshot untouched')
     data = response['data']

@@ -16,14 +16,14 @@ Run the regression tests explicitly from the repository root:
 python3 -m unittest discover -s scripts -p 'test_*.py'
 ```
 
-Refresh counts using an authenticated GitHub CLI with read access to all organization repositories, then render:
+Refresh counts using an authenticated GitHub CLI with read access to all organization repositories and owner-authorized access to organization repository totals, then render:
 
 ```sh
 python3 scripts/update_momentum.py
 python3 scripts/render_profile.py
 ```
 
-The updater counts merged PRs across all repositories owned by the `integral-xyz` organization, including private, archived, and forked repositories, with all PR authors included. Organization-wide queries automatically include new repositories. It uses the last twelve complete Monday–Sunday weeks in America/Toronto, including daylight saving transitions. It paginates the repository inventory and verifies access before replacing the snapshot. The authentication must retain access to every organization repository; GitHub can only return repositories visible to it. Public data contains aggregate counts and the inventory size, without repository names, PR titles, links, customer data, or code.
+The updater counts merged PRs across all repositories owned by the `integral-xyz` organization, including private, internal, archived, and forked repositories, with all PR authors included. Organization-wide queries automatically include new repositories. It uses the last twelve complete Monday–Sunday weeks in America/Toronto, including daylight saving transitions. It paginates the visible repository inventory and compares its size against independent organization metadata (`public_repos` plus `owned_private_repos`, including internal repositories). If these owner-visible totals are unavailable or do not match, it stops before collecting counts or replacing the last good snapshot. The authentication must retain access to every organization repository and to the organization totals. Public data contains aggregate counts and the inventory size, without repository names, PR titles, links, customer data, or code.
 
 The Codex recurring task runs Mondays at 9 a.m. America/Toronto after the initial profile PR has merged. It may update only the momentum JSON, generated README, and four momentum SVGs. It preserves content, layout, banners, and source scope. It pushes without force only if GitHub permits a direct update; otherwise it opens or updates a draft PR. No branch rules are changed.
 
