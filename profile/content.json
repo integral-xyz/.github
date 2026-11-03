@@ -1,0 +1,43 @@
+{
+  "description": "We build AI-native software that helps finance and accounting teams automate the busywork and focus on their clients.",
+  "links": [
+    {
+      "label": "Website",
+      "url": "https://www.alloyriver.com/"
+    },
+    {
+      "label": "Careers",
+      "url": "https://www.alloyriver.com/careers"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/company/alloyriver"
+    },
+    {
+      "label": "Say hello",
+      "url": "mailto:hi@alloyriver.com"
+    }
+  ],
+  "highlights": [
+    {
+      "title": "A closer look at every invoice",
+      "description": "Resizable invoice previews and month navigation in date pickers.",
+      "mergedOn": "2026-10-30"
+    },
+    {
+      "title": "Speak your next prompt",
+      "description": "Voice dictation in AI chat and Agent View.",
+      "mergedOn": "2026-10-29"
+    },
+    {
+      "title": "Bookkeeping, closer to home",
+      "description": "A bookkeeping queue section in the new Home experience.",
+      "mergedOn": "2026-10-29"
+    }
+  ],
+  "footer": "Good work compounds.",
+  "footerLink": {
+    "label": "Build with us",
+    "url": "https://www.alloyriver.com/careers"
+  }
+}

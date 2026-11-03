@@ -1,3 +1,4 @@
+<!-- Generated from content.json and momentum.json. Edit those files, then run scripts/render_profile.py. -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/banner-dark.svg">
   <img src="./assets/banner-light.svg" alt="Alloy River. Building the modern finance function." width="960">
@@ -5,11 +6,11 @@
 
 We build AI-native software that helps finance and accounting teams automate the busywork and focus on their clients.
 
-[**Website**](https://www.alloyriver.com/) &nbsp; · &nbsp; [**Careers**](https://www.alloyriver.com/careers) &nbsp; · &nbsp; [**LinkedIn**](https://www.linkedin.com/company/alloyriver) &nbsp; · &nbsp; [**Say hello**](mailto:hi@alloyriver.com)
+[Website](<https://www.alloyriver.com/>) &nbsp; · &nbsp; [Careers](<https://www.alloyriver.com/careers>) &nbsp; · &nbsp; [LinkedIn](<https://www.linkedin.com/company/alloyriver>) &nbsp; · &nbsp; [Say hello](<mailto:hi@alloyriver.com>)
 
 ## Built every week.
 
-Twelve weeks of engineering momentum. **Aug 10 – Nov 1, 2026.**
+Twelve weeks of engineering momentum. **Aug 10, 2026 – Nov 1, 2026.**
 
 <picture>
   <source media="(max-width: 520px) and (prefers-color-scheme: dark)" srcset="./assets/momentum-dark-compact.svg">
@@ -46,4 +47,4 @@ A bookkeeping queue section in the new Home experience.
 
 ---
 
-Good work compounds. [Build with us](https://www.alloyriver.com/careers).
+Good work compounds. [Build with us](<https://www.alloyriver.com/careers>).
