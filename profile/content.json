@@ -1,0 +1,26 @@
+{
+  "description": "We build AI-native software that helps finance and accounting teams automate the busywork and focus on their clients.",
+  "links": [
+    {
+      "label": "Website",
+      "url": "https://www.alloyriver.com/"
+    },
+    {
+      "label": "Careers",
+      "url": "https://www.alloyriver.com/careers"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/company/alloyriver"
+    },
+    {
+      "label": "Say hello",
+      "url": "mailto:hi@alloyriver.com"
+    }
+  ],
+  "footer": "Good work compounds.",
+  "footerLink": {
+    "label": "Build with us",
+    "url": "https://www.alloyriver.com/careers"
+  }
+}
