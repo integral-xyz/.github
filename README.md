@@ -10,6 +10,12 @@ Render the README and all chart variants with Python 3.9 or newer:
 python3 scripts/render_profile.py
 ```
 
+Run the regression tests explicitly from the repository root:
+
+```sh
+python3 -m unittest discover -s scripts -p 'test_*.py'
+```
+
 Refresh counts using an authenticated GitHub CLI with read access to all organization repositories, then render:
 
 ```sh
@@ -21,4 +27,4 @@ The updater counts merged PRs across all repositories owned by the `integral-xyz
 
 The Codex recurring task runs Mondays at 9 a.m. America/Toronto after the initial profile PR has merged. It may update only the momentum JSON, generated README, and four momentum SVGs. It preserves content, layout, banners, and source scope. It pushes without force only if GitHub permits a direct update; otherwise it opens or updates a draft PR. No branch rules are changed.
 
-Repository permissions report write access for the current account. The active organization ruleset, "Block Push to Main", requires one PR approval and resolved review threads on `main`, with no bypass actors. Direct pushes are currently blocked, so recurring updates use draft PRs. No branch rules are changed by this task.
+Recurring momentum updates are currently submitted as draft PRs for review.

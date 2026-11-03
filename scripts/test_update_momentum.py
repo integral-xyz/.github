@@ -68,6 +68,39 @@ class MomentumTests(unittest.TestCase):
         self.assertIn('--paginate', run.call_args_list[0].args[0])
         self.assertIn('--slurp', run.call_args_list[0].args[0])
 
+    @patch('update_momentum.subprocess.run')
+    def test_inventory_auth_failure_is_actionable_without_raw_stderr(self, run):
+        run.side_effect = subprocess.CalledProcessError(
+            1, ['gh'], stderr='HTTP 401: Bad credentials; private-example ghp_example',
+        )
+        with self.assertRaisesRegex(RuntimeError, 'Repository inventory failed.*authentication') as raised:
+            collect(dt.date(2026, 11, 9))
+        self.assertNotIn('private-example', str(raised.exception))
+        self.assertNotIn('ghp_example', str(raised.exception))
+        self.assertTrue(raised.exception.__suppress_context__)
+
+    @patch('update_momentum.subprocess.run')
+    def test_count_query_network_failure_is_actionable_without_raw_stderr(self, run):
+        run.side_effect = [result(inventory()), subprocess.CalledProcessError(
+            1, ['gh'], stderr='Connection timed out: https://private-example.invalid/?token=example',
+        )]
+        with self.assertRaisesRegex(RuntimeError, 'Momentum query failed.*network connection') as raised:
+            collect(dt.date(2026, 11, 9))
+        self.assertNotIn('private-example', str(raised.exception))
+        self.assertIn('leaving existing snapshot untouched', str(raised.exception))
+
+    @patch('update_momentum.subprocess.run')
+    def test_rate_limit_failure_names_the_recovery(self, run):
+        run.side_effect = subprocess.CalledProcessError(1, ['gh'], stderr='HTTP 403: API rate limit exceeded')
+        with self.assertRaisesRegex(RuntimeError, 'rate limit reached; retry'):
+            collect(dt.date(2026, 11, 9))
+
+    @patch('update_momentum.subprocess.run')
+    def test_missing_cli_explains_installation(self, run):
+        run.side_effect = FileNotFoundError('gh')
+        with self.assertRaisesRegex(RuntimeError, 'install the GitHub CLI'):
+            collect(dt.date(2026, 11, 9))
+
 
 if __name__ == '__main__':
     unittest.main()

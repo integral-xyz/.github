@@ -10,6 +10,25 @@ ROOT = Path(__file__).resolve().parents[1]
 ORGANIZATION = 'integral-xyz'
 ZONE = ZoneInfo('America/Toronto')
 
+def run_gh(arguments, operation):
+    """Report actionable failures without copying private CLI output into reports."""
+    try:
+        result = subprocess.run(['gh', 'api', 'graphql', *arguments], check=True, capture_output=True, text=True)
+    except subprocess.CalledProcessError as error:
+        diagnostic = (error.stderr or '').lower()
+        if 'rate limit' in diagnostic:
+            reason = 'GitHub rate limit reached; retry after the limit resets'
+        elif any(term in diagnostic for term in ('401', '403', 'authenticate', 'authentication', 'gh auth login', 'bad credentials', 'resource not accessible', 'could not resolve to', '404', 'not found')):
+            reason = 'check GitHub CLI authentication and access to all organization repositories'
+        elif any(term in diagnostic for term in ('timeout', 'timed out', 'connection', 'network', 'tls', 'dial tcp', 'resolve host')):
+            reason = 'check the network connection to GitHub and retry'
+        else:
+            reason = f'GitHub CLI exited with status {error.returncode}; inspect authentication, access, and service availability'
+        raise RuntimeError(f'{operation} failed: {reason}; leaving existing snapshot untouched') from None
+    except FileNotFoundError:
+        raise RuntimeError(f'{operation} failed: install the GitHub CLI and authenticate; leaving existing snapshot untouched') from None
+    return json.loads(result.stdout)
+
 def week_ranges(today):
     stop = today - dt.timedelta(days=today.weekday())
     first = stop - dt.timedelta(weeks=12)
@@ -17,8 +36,7 @@ def week_ranges(today):
 
 def collect(today):
     inventory_query = 'query($endCursor:String) { organization(login:' + json.dumps(ORGANIZATION) + ') { repositories(first:100, after:$endCursor) { totalCount nodes { viewerPermission } pageInfo { hasNextPage endCursor } } } }'
-    inventory = subprocess.run(['gh', 'api', 'graphql', '--paginate', '--slurp', '-f', 'query=' + inventory_query], check=True, capture_output=True, text=True)
-    pages = json.loads(inventory.stdout)
+    pages = run_gh(['--paginate', '--slurp', '-f', 'query=' + inventory_query], 'Repository inventory')
     if not pages or any(page.get('errors') for page in pages):
         raise RuntimeError('GitHub could not return complete repository inventory; leaving existing snapshot untouched')
     connections = [page['data']['organization']['repositories'] for page in pages]
@@ -35,8 +53,7 @@ def collect(today):
         b = (dt.datetime.combine(stop, dt.time(), ZONE) - dt.timedelta(seconds=1)).isoformat()
         query = f'is:pr is:merged org:{ORGANIZATION} merged:{a}..{b}'
         queries.append(f'w{i}: search(type:ISSUE, query:{json.dumps(query)}, first:1) {{ issueCount }}')
-    result = subprocess.run(['gh', 'api', 'graphql', '-f', 'query=query {' + ' '.join(queries) + '}'], check=True, capture_output=True, text=True)
-    response = json.loads(result.stdout)
+    response = run_gh(['-f', 'query=query {' + ' '.join(queries) + '}'], 'Momentum query')
     if response.get('errors'):
         raise RuntimeError('GitHub could not return complete counts; leaving existing snapshot untouched')
     data = response['data']
