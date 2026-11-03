@@ -25,26 +25,6 @@ Twelve weeks of engineering momentum. **Aug 10, 2026 – Nov 1, 2026.**
 
 <sub>fms + fms-frontend + integrations · Complete weeks, Toronto time · Includes all PR authors · Snapshot captured Nov 3, 2026</sub>
 
-## Fresh from the team.
-
-### A closer look at every invoice
-
-Resizable invoice previews and month navigation in date pickers.
-
-<sub>Merged Oct 30, 2026</sub>
-
-### Speak your next prompt
-
-Voice dictation in AI chat and Agent View.
-
-<sub>Merged Oct 29, 2026</sub>
-
-### Bookkeeping, closer to home
-
-A bookkeeping queue section in the new Home experience.
-
-<sub>Merged Oct 29, 2026</sub>
-
 ---
 
 Good work compounds. [Build with us](<https://www.alloyriver.com/careers>).

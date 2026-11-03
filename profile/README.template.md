@@ -25,10 +25,6 @@ $stats
 
 <sub>fms + fms-frontend + integrations · Complete weeks, Toronto time · Includes all PR authors · Snapshot captured $as_of</sub>
 
-## Fresh from the team.
-
-$highlights
-
 ---
 
 $footer

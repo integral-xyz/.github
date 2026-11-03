@@ -2,7 +2,7 @@
 
 GitHub displays `profile/README.md` on the organization Overview after it reaches `main`.
 
-Edit `profile/content.json` to change the description, links, and curated feature highlights. The numbers live in `profile/momentum.json`. Both are public; include only approved public content. Dates describe code merges, not verified deployment.
+Edit `profile/content.json` to change the description, links, and footer. The numbers live in `profile/momentum.json`. Both are public; include only approved public content.
 
 Render the README and all chart variants with Python 3.9 or newer:
 
@@ -17,7 +17,7 @@ python3 scripts/update_momentum.py
 python3 scripts/render_profile.py
 ```
 
-The updater counts all merged PR authors across `fms`, `fms-frontend`, and `integrations`. It uses the last twelve complete Monday–Sunday weeks in America/Toronto, including daylight saving transitions. It fetches aggregate counts and verifies source access before replacing the snapshot. It does not export PR titles, links, customer data, or code. Highlights remain manually curated.
+The updater counts all merged PR authors across `fms`, `fms-frontend`, and `integrations`. It uses the last twelve complete Monday–Sunday weeks in America/Toronto, including daylight saving transitions. It fetches aggregate counts and verifies source access before replacing the snapshot. It does not export PR titles, links, customer data, or code.
 
 The Codex recurring task runs Mondays at 9 a.m. America/Toronto after the initial profile PR has merged. It may update only the momentum JSON, generated README, and four momentum SVGs. It preserves content, layout, banners, and source scope. It pushes without force only if GitHub permits a direct update; otherwise it opens or updates a draft PR. No branch rules are changed.
 

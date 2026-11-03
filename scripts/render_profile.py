@@ -30,8 +30,6 @@ if datetime.date.fromisoformat(ROWS[-1]['end']) >= captured:
 for link in [*CONTENT['links'], CONTENT['footerLink']]:
     if urlparse(link['url']).scheme not in ('https', 'mailto'):
         raise ValueError('Use https or mailto links')
-for item in CONTENT['highlights']:
-    datetime.date.fromisoformat(item['mergedOn'])
 FONT = '-apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif'
 ceiling = max(300, math.ceil(max(r['merged'] for r in ROWS) * 1.12 / 300) * 300)
 summary = escape('Weekly merged pull requests, ' + ROWS[0]['start'] + ' to ' + ROWS[-1]['end'] + '.')
@@ -91,7 +89,6 @@ fields = {
     'chart_alt': 'Weekly merged PRs: ' + ', '.join(str(r['merged']) for r in ROWS) + f'. The four-week rolling average ends at {average}.',
     'stats': f"| **{sum(r['merged'] for r in ROWS):,}** | **{ROWS[-1]['merged']:,}** | **{average:,}** |",
     'as_of': date_label(DATA['asOf']),
-    'highlights': '\n\n'.join('### ' + markdown(h['title']) + '\n\n' + markdown(h['description']) + '\n\n<sub>Merged ' + date_label(h['mergedOn']) + '</sub>' for h in CONTENT['highlights']),
     'footer': markdown(CONTENT['footer']) + ' ' + link(CONTENT['footerLink']) + '.',
 }
 template = (ROOT / 'profile/README.template.md').read_text()
