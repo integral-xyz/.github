@@ -1,14 +1,9 @@
 {
-  "asOf": "2026-11-03",
+  "asOf": "2026-11-09",
   "timezone": "America/Toronto",
   "organization": "integral-xyz",
   "repositoryCount": 48,
   "weeks": [
-    {
-      "start": "2026-08-10",
-      "end": "2026-08-16",
-      "merged": 146
-    },
     {
       "start": "2026-08-17",
       "end": "2026-08-23",
@@ -63,6 +58,11 @@
       "start": "2026-10-26",
       "end": "2026-11-01",
       "merged": 408
+    },
+    {
+      "start": "2026-11-02",
+      "end": "2026-11-08",
+      "merged": 483
     }
   ]
 }
