@@ -10,20 +10,20 @@ We build AI-native software that helps finance and accounting teams automate the
 
 ## Built every week.
 
-Twelve weeks of engineering momentum. **Aug 24, 2026 – Nov 15, 2026.**
+Twelve weeks of engineering momentum. **Aug 31, 2026 – Nov 22, 2026.**
 
 <picture>
   <source media="(max-width: 520px) and (prefers-color-scheme: dark)" srcset="./assets/momentum-dark-compact.svg">
   <source media="(max-width: 520px)" srcset="./assets/momentum-light-compact.svg">
   <source media="(prefers-color-scheme: dark)" srcset="./assets/momentum-dark.svg">
-  <img src="./assets/momentum-light.svg" alt="Weekly merged PRs: 160, 155, 112, 203, 295, 349, 337, 359, 440, 408, 483, 602. The four-week rolling average ends at 483." width="960">
+  <img src="./assets/momentum-light.svg" alt="Weekly merged PRs: 155, 112, 203, 295, 349, 337, 359, 440, 408, 483, 602, 495. The four-week rolling average ends at 497." width="960">
 </picture>
 
 | PRs merged in 12 weeks | PRs merged last week | Four-week average |
 | :--- | :--- | :--- |
-| **3,903** | **602** | **483** |
+| **4,238** | **495** | **497** |
 
-<sub>Organization-wide · Complete weeks, Toronto time · Includes all PR authors · Snapshot captured Nov 16, 2026</sub>
+<sub>Organization-wide · Complete weeks, Toronto time · Includes all PR authors · Snapshot captured Nov 23, 2026</sub>
 
 ---
 
